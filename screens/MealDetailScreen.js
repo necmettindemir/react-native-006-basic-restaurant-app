@@ -61,6 +61,7 @@ MealDetailScreen.navigationOptions = (navigationData) => {
                             console.log('Marked as fav!');
                         }}
                         />
+                      
             </HeaderButtons>
             
             //  <Button title=""  onPress={  () => { console.log('header right button clicked!');  } }>                    

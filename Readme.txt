@@ -1,12 +1,22 @@
 
-Simple react native app to show the followings
+---- NOTES ----
 
 
-Note: 
+Note 01: 
 in some cases using yarn have been better.
 https://vander.host/knowledgebase/software-development/what-is-the-yarn-equivalent-of-npm-install/
 
 
+Note 02: 
+if "npm install" does not work properly do the followings
+ #>expo update
+ #>yarn upgrade
+
+
+ ---- /NOTES ----
+
+
+Simple react native app to show the followings
 
 - how to add navigation ability using react navigation packages as below
 
@@ -50,3 +60,15 @@ https://vander.host/knowledgebase/software-development/what-is-the-yarn-equivale
    if this does not work use yarn
    
    #>yarn add react-navigation-header-buttons
+
+
+- how to use tab navigators
+  #>yarn add react-navigation-material-bottom-tabs
+  #>yarn add react-native-paper
+
+- how to use "Stack Navigator" in "Tab Navigator"
+
+
+
+
+

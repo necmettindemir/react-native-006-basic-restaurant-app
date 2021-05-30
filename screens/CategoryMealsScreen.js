@@ -1,36 +1,15 @@
 import React from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
+//import {Text, View, FlatList, StyleSheet} from 'react-native';
 
-import Mealitem from '../components/Mealitem';
+import MealList from '../components/MealList';
+
 
 import { CATEGORIES, MEALS } from '../data/dummy-data';
 
 
 const CategoryMealsScreen = (props) => {
 
-    const renderMealitem= (itemData) => {
-        return (
-            // <View>
-            //      <Text>{itemData.item.title}</Text>                 
-            // </View>
 
-            <Mealitem 
-                title={itemData.item.title} 
-                duration={itemData.item.duration}
-                complexity={itemData.item.complexity}      
-                affordability={itemData.item.affordability} 
-                imageUrl={itemData.item.imageUrl}
-                onSelect={ () => {
-                    props.navigation.navigate(
-                            { 
-                                routeName: 'MealDetail',
-                                params: { mealid: itemData.item.id}
-                            });
-                }}
-            />
-
-        );
-    };
 
     const catId = props.navigation.getParam('categoryId');
     const selectedCategory = CATEGORIES.find( c => c.id == catId);
@@ -40,17 +19,21 @@ const CategoryMealsScreen = (props) => {
     );
 
     return (
+        <MealList 
+            listData={displayedMeals}
+            navigation={props.navigation}
+        />
 
-        <View style={styles.screen}>
+        // <View style={styles.screen}>
 
-            <FlatList 
-                data={displayedMeals} 
-                keyExtractor={ (item, index) => item.id }
-                renderItem={renderMealitem}
-                style={{width:'100%'}}
-            />
+        //     <FlatList 
+        //         data={displayedMeals} 
+        //         keyExtractor={ (item, index) => item.id }
+        //         renderItem={renderMealitem}
+        //         style={{width:'100%'}}
+        //     />
 
-        </View>
+        // </View>
         
 
         // <View style={styles.screen}>
@@ -98,13 +81,13 @@ CategoryMealsScreen.navigationOptions = (navigationData) => {
 //-----
 
 
-const styles = StyleSheet.create({
-    screen: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-});
+// const styles = StyleSheet.create({
+//     // screen: {
+//     //     flex:1,
+//     //     justifyContent: 'center',
+//     //     alignItems: 'center'
+//     // }
+// });
 
 
 export default CategoryMealsScreen;
