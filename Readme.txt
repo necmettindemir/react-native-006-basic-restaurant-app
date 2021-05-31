@@ -27,7 +27,9 @@ Simple react native app to show the followings
 #>npm install --save react-navigation
 
 #>expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
-
+  - problem occured with last version of eact-native-reanimated
+    so, I installed version 1.13.0
+    #>yarn add eact-native-reanimated@1.13.0
 
 - how to navigate with coding
 
