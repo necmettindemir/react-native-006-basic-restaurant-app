@@ -1,14 +1,28 @@
-//import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { enableScreens } from 'react-native-screens'
 
-//import CategoriesScreen from './screens/CategoriesScreen';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux'; 
+
 import MealsNavigator from './navigation/MealsNavigator';
+import mealsReducer from './store/reducers/mealsReducer';
+
 
 enableScreens();
+
+
+//------------
+
+const rootReducer = combineReducers({
+  meals: mealsReducer
+});
+
+const store = createStore(rootReducer);
+
+//------------
 
 const fetchFonts = () => {  
   return Font.loadAsync({
@@ -32,19 +46,14 @@ export default function App() {
       );      
   }
 
+  //return (<MealsNavigator />);
+
   return (
+      <Provider store={store}>
+        <MealsNavigator />
+      </Provider>
+    );
 
-    // <View style={styles.container}>      
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   {/* <StatusBar style="auto" /> */}
-    //   <CategoriesScreen />      
-         
-    // </View>
-
-    <MealsNavigator />  
-   
-
-  );
 }
 
 const styles = StyleSheet.create({

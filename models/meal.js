@@ -15,7 +15,7 @@ class Meal {
         isGlutenFree, 
         isVegan, 
         isVegetarian, 
-        isLactoseGree
+        isLactoseFree
     ) {
         this.id = id;
         this.categoryIds = categoryIds;
@@ -29,7 +29,7 @@ class Meal {
         this.isGlutenFree = isGlutenFree, 
         this.isVegan = isVegan, 
         this.isVegetarian = isVegetarian, 
-        this.isLactoseGree = isLactoseGree
+        this.isLactoseFree = isLactoseFree
     }
 }
 

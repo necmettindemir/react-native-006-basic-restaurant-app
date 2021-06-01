@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {Text, View, ScrollView, Image, Button, TouchableOpacity, StyleSheet} from 'react-native';
 
-import {MEALS} from '../data/dummy-data';
+//import {MEALS} from '../data/dummy-data';
+import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
@@ -9,7 +10,7 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 
 import DefaultText from '../components/DefaultText';
-
+import { toggleFavorite } from '../store/actions/mealsAction';
 
 const Listitem = (props) => {
     return (
@@ -21,8 +22,53 @@ const Listitem = (props) => {
 
 const MealDetailScreen = (props) => {
 
-    const mealid = props.navigation.getParam('mealid');
-    const selectedMeal = MEALS.find( m => m.id === mealid);
+    const mealId = props.navigation.getParam('mealId');
+
+    const availableMEALS = useSelector(state => state.meals.meals);
+
+    const currentMealisFavorite = useSelector(state => 
+        state.meals.favoriteMeals.some(meal => meal.id === mealId)
+    );
+
+    const selectedMeal = availableMEALS.find( m => m.id === mealId);
+
+    //const selectedMeal = MEALS.find( m => m.id === mealid);    
+    
+
+    //-------------------------------------
+    /*    
+    //1) when selectedMeal change run this method
+
+    //2) because this way works as ComponentDidMount 
+    //   this way has latency.. so we should find a better way
+    
+    useEffect( () => {
+        props.navigation.setParams({ mealTitle: selectedMeal.title});    
+    },[selectedMeal]);
+     */
+
+    const dispatch = useDispatch();
+
+    const toggleFavoriteHandler = useCallback(
+
+        () => {            
+            dispatch( toggleFavorite(mealId) );
+        },
+        [dispatch, mealId]
+
+    );
+
+    useEffect( () => {
+        props.navigation.setParams({ toggleFav: toggleFavoriteHandler});
+    },[toggleFavoriteHandler]);
+    //-------------------------------------
+
+    useEffect( () => {
+        props.navigation.setParams({ isFav: currentMealisFavorite});
+    },[currentMealisFavorite]);
+
+    //-------------------------------------
+
 
     return (
 
@@ -83,21 +129,34 @@ const MealDetailScreen = (props) => {
 
 MealDetailScreen.navigationOptions = (navigationData) => {
 
+    //both the followings are sent from Mealitem in MealList
+    const mealId = navigationData.navigation.getParam('mealId');    
+    const mealTitle = navigationData.navigation.getParam('mealTitle');
+    const toggleFav = navigationData.navigation.getParam('toggleFav');
 
-    const mealid = navigationData.navigation.getParam('mealid');
-    const selectedMeal = MEALS.find( m => m.id === mealid);
+    const isFav = navigationData.navigation.getParam('isFav');
+
+    //const selectedMeal = MEALS.find( m => m.id === mealid);
+
+    // const availableMEALS = useSelector(state => state.meals.meals);
+    // const selectedMeal = availableMEALS.find( m => m.id === mealid);
 
     return {
-        headerTitle: () => <View><Text style={styles.title}>{selectedMeal.title}</Text></View>,
-        headerRight: () => 
+       // headerTitle: () => <View><Text style={styles.title}>{selectedMeal.title}</Text></View>,
+       headerTitle: () => <View><Text style={styles.title}>{mealTitle}</Text></View>,
+       headerRight: () => 
 
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item 
                         title='Favorite' 
-                        iconName='ios-star' 
+                        //iconName='ios-star' 
+                        iconName={ isFav === true ? 'ios-star' : 'ios-star-outline' }
                         onPress={ () => {
-                            console.log('Marked as fav!');
-                        }}
+                             console.log('Marked as fav!');  
+                             toggleFav();                          
+                             }                            
+                        }
+                        //onPress={toggleFav}
                         />                      
             </HeaderButtons>        
 

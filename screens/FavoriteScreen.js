@@ -6,11 +6,26 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 
 
 import MealList from '../components/MealList';
-import { MEALS } from '../data/dummy-data';
+import {useSelector} from 'react-redux';
+
+import DefaultText from '../components/DefaultText';
 
 const FavoriteScreen = (props) => {
 
-    const favMeals = MEALS.filter( m => m.id === 'm1' || m.id==='m2');
+    // const favMEALS = useSelector(state => state.meals.meals);    
+    // const favMeals = favMEALS.filter( m => m.id === 'm1' || m.id==='m2');
+
+    const favMeals = useSelector(state => state.meals.favoriteMeals);        
+
+    if (favMeals.length === 0 || !favMeals) {
+        return (
+            <View style={styles.content}>
+                <DefaultText>
+                    No favorite meals found.. Start adding some!
+               </DefaultText>
+            </View>
+        );
+    }
 
     return (
         <MealList 
@@ -18,21 +33,7 @@ const FavoriteScreen = (props) => {
             navigation={props.navigation} 
         />
     );
-
 };
-
-
-// FavoriteScreen.navigationOptions = (navigationData) => {
-    
-//     // const catId = navigationData.navigation.getParam('categoryId');
-//     // const selectedCategory = CATEGORIES.find( c => c.id == catId);
-
-//     return {
-//         headerTitle: "Your Favorites"
-
-//     };
-// };
-
 
 
 FavoriteScreen.navigationOptions = (navigationData) => {
@@ -67,6 +68,13 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    content: {
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin:5,
+        padding: 10
     }
 });
 

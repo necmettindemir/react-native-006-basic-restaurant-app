@@ -18,6 +18,9 @@ if "npm install" does not work properly do the followings
 
 Simple react native app to show the followings
 
+
+PART 1 - NAVIGATION 
+
 - how to add navigation ability using react navigation packages as below
 
 #>npm install react-navigation-stack
@@ -70,7 +73,14 @@ Simple react native app to show the followings
 
 - how to use "Stack Navigator" in "Tab Navigator"
 
+-----------------------------------------------------
 
 
 
+PART 2 - REDUX
 
+- how to use redux
+
+ #>yarn add redux react-redux
+
+ - how to use useSelector, useDispatch
